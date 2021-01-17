@@ -294,6 +294,10 @@ set(LVGL_SRC
         libs/lvgl/src/lv_objx/lv_line.h
         )
 
+set(QRCODE_SRC
+        libs/qrcodegenerator/QrCode.cpp
+        )
+
 list(APPEND IMAGE_FILES
         displayapp/icons/battery/os_battery_error.c
         displayapp/icons/battery/os_battery_100.c
@@ -467,6 +471,7 @@ list(APPEND SOURCE_FILES
         components/ble/BatteryInformationService.cpp
         components/ble/ImmediateAlertService.cpp
         components/ble/ServiceDiscovery.cpp
+        components/ble/QrService.cpp
         components/ble/HeartRateService.cpp
         components/firmwarevalidator/FirmwareValidator.cpp
         drivers/Cst816s.cpp
@@ -569,6 +574,7 @@ set(INCLUDE_FILES
         libs/date/includes/date/julian.h
         libs/date/includes/date/ptz.h
         libs/date/includes/date/tz_private.h
+        libs/qrcodegenerator/QrCode.hpp
         displayapp/LittleVgl.h
         systemtask/SystemTask.h
         systemtask/SystemMonitor.h
@@ -587,6 +593,7 @@ include_directories(
         libs/
         FreeRTOS/
         libs/date/includes
+        libs/qrcodegenerator
         libs/mynewt-nimble/porting/npl/freertos/include
         libs/mynewt-nimble/nimble/include
         libs/mynewt-nimble/porting/nimble/include
@@ -720,6 +727,18 @@ add_library(lvgl STATIC ${LVGL_SRC})
 target_include_directories(lvgl SYSTEM PUBLIC . ../)
 target_include_directories(lvgl SYSTEM PUBLIC ${INCLUDES_FROM_LIBS})
 target_compile_options(lvgl PRIVATE
+        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
+        $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
+        $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
+        $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
+        $<$<COMPILE_LANGUAGE:ASM>: -MP -MD -std=c99 -x assembler-with-cpp>
+        )
+
+# qrcode
+add_library(qrcode STATIC ${QRCODE_SRC})
+target_include_directories(qrcode SYSTEM PUBLIC . ../)
+target_include_directories(qrcode SYSTEM PUBLIC ${INCLUDES_FROM_LIBS})
+target_compile_options(qrcode PRIVATE
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
         $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
