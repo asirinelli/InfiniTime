@@ -493,6 +493,7 @@ list(APPEND SOURCE_FILES
         displayapp/screens/ApplicationList.cpp
         displayapp/screens/Notifications.cpp
         displayapp/screens/Twos.cpp
+        displayapp/screens/Qr.cpp
         displayapp/screens/HeartRate.cpp
 
         ## Watch faces
@@ -872,7 +873,7 @@ set(EXECUTABLE_FILE_NAME ${EXECUTABLE_NAME}-${pinetime_VERSION_MAJOR}.${pinetime
 set(NRF5_LINKER_SCRIPT "${CMAKE_SOURCE_DIR}/gcc_nrf52.ld")
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 set_target_properties(${EXECUTABLE_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_FILE_NAME})
-target_link_libraries(${EXECUTABLE_NAME} nimble nrf-sdk lvgl)
+target_link_libraries(${EXECUTABLE_NAME} nimble nrf-sdk lvgl qrcode)
 target_compile_options(${EXECUTABLE_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:RELEASE>>: ${COMMON_FLAGS} -O3>
@@ -901,7 +902,7 @@ set(IMAGE_MCUBOOT_FILE_NAME ${EXECUTABLE_MCUBOOT_NAME}-image-${pinetime_VERSION_
 set(DFU_MCUBOOT_FILE_NAME ${EXECUTABLE_MCUBOOT_NAME}-dfu-${pinetime_VERSION_MAJOR}.${pinetime_VERSION_MINOR}.${pinetime_VERSION_PATCH}.zip)
 set(NRF5_LINKER_SCRIPT_MCUBOOT "${CMAKE_SOURCE_DIR}/gcc_nrf52-mcuboot.ld")
 add_executable(${EXECUTABLE_MCUBOOT_NAME} ${SOURCE_FILES})
-target_link_libraries(${EXECUTABLE_MCUBOOT_NAME} nimble nrf-sdk lvgl)
+target_link_libraries(${EXECUTABLE_MCUBOOT_NAME} nimble nrf-sdk lvgl qrcode)
 set_target_properties(${EXECUTABLE_MCUBOOT_NAME} PROPERTIES OUTPUT_NAME ${EXECUTABLE_MCUBOOT_FILE_NAME})
 target_compile_options(${EXECUTABLE_MCUBOOT_NAME} PUBLIC
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:DEBUG>>: ${COMMON_FLAGS} -O0 -g3>
