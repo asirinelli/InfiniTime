@@ -40,4 +40,3 @@ bool InfiniPaint::OnTouchEvent(uint16_t x, uint16_t y) {
   lvgl.FlushDisplay(&area, b);
   return true;
 }
-
