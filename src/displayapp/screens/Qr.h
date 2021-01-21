@@ -35,13 +35,15 @@ namespace Pinetime {
 
       private:
         Pinetime::Components::LittleVgl& lvgl;
-        static constexpr uint16_t width = 6;
-        static constexpr uint16_t height = 6;
-        static constexpr uint16_t bufferSize = width * height;
-        lv_color_t b[bufferSize];
 
         uint16_t qrSize;
-        uint16_t qrPixelSize = 6;
+        uint16_t qrPixelSize;
+        uint16_t bufferSize;
+        lv_area_t area;
+        // static constexpr uint16_t maxBufferSize = 12*12;
+        // static constexpr lv_color_t b[maxBufferSize];
+        static constexpr uint16_t border = 1;
+
         bool running = true;
         std::string qrString = "https://github.com/JF002/Pinetime";
         // qrcodegen::QrCode qrCode;
