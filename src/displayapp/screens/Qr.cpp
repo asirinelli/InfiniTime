@@ -10,7 +10,6 @@ using namespace qrcodegen;
 
 Qr::Qr(Pinetime::Applications::DisplayApp* app, Pinetime::Components::LittleVgl& lvgl) : Screen(app), lvgl{lvgl} {
   app->SetTouchMode(DisplayApp::TouchModes::Polling);
-  std::fill(b, b + bufferSize, LV_COLOR_WHITE);
 }
 
 Qr::~Qr() {
@@ -43,16 +42,15 @@ bool Qr::OnTouchEvent(uint16_t x, uint16_t y) {
 // }
 
 void Qr::drawQr() {
-  qrcodegen::QrCode qrCode = QrCode::encodeText("https://github.com/JF002/Pinetime", QrCode::Ecc::MEDIUM);
+  qrcodegen::QrCode qrCode = QrCode::encodeText(&qrString[0], QrCode::Ecc::MEDIUM);
   qrSize = qrCode.getSize();
-  // qrPixelSize = 240 / qrSize;
-  // qrPixelSize = 8;
-  // uint16_t bufferSize1 = qrPixelSize*qrPixelSize;
-  // lv_color_t bb[bufferSize1];
-  // std::fill(bb, bb + bufferSize1, LV_COLOR_WHITE);
+  qrPixelSize = 240 / (qrSize + 2*border);
+  bufferSize = qrPixelSize * qrPixelSize;
+  
+  lv_color_t b[bufferSize];
+  std::fill(b, b + bufferSize, LV_COLOR_WHITE);
 
-  lv_area_t area;
-  int border = 4;
+
 	for (int y = -border; y < qrSize + border; y++) {
 		for (int x = -border; x < qrSize + border; x++) {
       if (!qrCode.getModule(x, y)) {
