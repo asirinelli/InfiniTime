@@ -1,11 +1,10 @@
 #pragma once
 
-#include <lvgl/lvgl.h>
 #include <cstdint>
+#include <string>
+#include <lvgl/lvgl.h>
 #include "Screen.h"
-#include "QrCode.hpp"
-
-using namespace qrcodegen;
+#include "qrcodegen.h"
 
 
 namespace Pinetime {
@@ -33,20 +32,24 @@ namespace Pinetime {
 
         void drawQr();
 
+        void setQrText(std::string newQrText);
+
       private:
         Pinetime::Components::LittleVgl& lvgl;
 
-        uint16_t qrSize;
-        uint16_t qrPixelSize;
-        uint16_t bufferSize;
+        bool running = true;
+
+        uint8_t qrSize;
+        uint8_t qrModuleSize;
+        uint8_t bufferSize;
         lv_area_t area;
-        // static constexpr uint16_t maxBufferSize = 12*12;
-        // static constexpr lv_color_t b[maxBufferSize];
+
         static constexpr uint16_t border = 1;
 
-        bool running = true;
-        std::string qrString = "https://github.com/JF002/Pinetime";
-        // qrcodegen::QrCode qrCode;
+
+        uint8_t qrcode[qrcodegen_BUFFER_LEN_MAX];
+        uint8_t tempBuffer[qrcodegen_BUFFER_LEN_MAX];
+        std::string qrText = "https://github.com/JF002/Pinetime";
       };
     }
   }
