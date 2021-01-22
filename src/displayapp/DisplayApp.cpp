@@ -208,7 +208,7 @@ void DisplayApp::RunningState() {
       case Apps::Meter: currentScreen.reset(new Screens::Meter(this)); break;
       case Apps::StopWatch: currentScreen.reset(new Screens::StopWatch(this)); break;
       case Apps::Twos: currentScreen.reset(new Screens::Twos(this)); break;
-      case Apps::Qr: currentScreen.reset(new Screens::Qr(this, lvgl)); break;
+      case Apps::Qr: currentScreen.reset(new Screens::Qr(this, lvgl, systemTask.nimble().qr())); break;
       case Apps::Paint: currentScreen.reset(new Screens::InfiniPaint(this, lvgl)); break;
       case Apps::Paddle: currentScreen.reset(new Screens::Paddle(this, lvgl)); break;
       case Apps::Brightness : currentScreen.reset(new Screens::Brightness(this, brightnessController)); break;

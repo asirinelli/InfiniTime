@@ -597,6 +597,7 @@ list(APPEND RECOVERY_SOURCE_FILES
         components/ble/ServiceDiscovery.cpp
         components/ble/NavigationService.cpp
         components/ble/HeartRateService.cpp
+        components/ble/QrService.cpp
         components/firmwarevalidator/FirmwareValidator.cpp
         components/settings/Settings.cpp
         drivers/Cst816s.cpp
@@ -692,6 +693,7 @@ set(INCLUDE_FILES
         components/ble/BleClient.h
         components/ble/HeartRateService.h
         components/settings/Settings.h
+        components/ble/QrService.h
         drivers/Cst816s.h
         FreeRTOS/portmacro.h
         FreeRTOS/portmacro_cmsis.h

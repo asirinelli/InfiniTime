@@ -2,11 +2,15 @@
 #include "../DisplayApp.h"
 #include "../LittleVgl.h"
 #include "qrcodegen.h"
+#include "components/ble/QrService.h"
 #include "Qr.h"
 
 using namespace Pinetime::Applications::Screens;
 
-Qr::Qr(Pinetime::Applications::DisplayApp* app, Pinetime::Components::LittleVgl& lvgl) : Screen(app), lvgl{lvgl} {
+Qr::Qr(Pinetime::Applications::DisplayApp* app,
+        Pinetime::Components::LittleVgl& lvgl,
+        Pinetime::Controllers::QrService& qrService) :
+          Screen(app), lvgl{lvgl}, qrService(qrService) {
   app->SetTouchMode(DisplayApp::TouchModes::Polling);
 }
 
@@ -36,6 +40,8 @@ bool Qr::OnTouchEvent(uint16_t x, uint16_t y) {
 
 void Qr::drawQr() {
 
+  qrText = qrService.getQrText();
+
   bool ok = qrcodegen_encodeText(&qrText[0], tempBuffer, qrcode, qrcodegen_Ecc_LOW,
       qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
 
@@ -61,8 +67,4 @@ void Qr::drawQr() {
     	}
     }
   }
-}
-
-void Qr::setQrText(std::string newQrText) {
-  qrText = newQrText;
 }
