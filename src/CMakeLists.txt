@@ -563,6 +563,7 @@ set(INCLUDE_FILES
         components/ble/ImmediateAlertService.h
         components/ble/ServiceDiscovery.h
         components/ble/BleClient.h
+        components/ble/QrService.h
         components/ble/HeartRateService.h.h
         drivers/Cst816s.h
         FreeRTOS/portmacro.h

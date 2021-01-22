@@ -4,6 +4,7 @@
 #include <string>
 #include <lvgl/lvgl.h>
 #include "Screen.h"
+#include "components/ble/QrService.h"
 #include "qrcodegen.h"
 
 
@@ -16,7 +17,8 @@ namespace Pinetime {
 
       class Qr : public Screen {
       public:
-        Qr(DisplayApp* app, Pinetime::Components::LittleVgl& lvgl);
+        Qr(DisplayApp* app, Pinetime::Components::LittleVgl& lvgl,
+                            Pinetime::Controllers::QrService& qrService);
 
         ~Qr() override;
 
@@ -28,14 +30,11 @@ namespace Pinetime {
 
         bool OnTouchEvent(uint16_t x, uint16_t y) override;
 
-        // void receiveQrString(std::string qrString);
-
         void drawQr();
-
-        void setQrText(std::string newQrText);
 
       private:
         Pinetime::Components::LittleVgl& lvgl;
+        Pinetime::Controllers::QrService& qrService;
 
         bool running = true;
 
@@ -49,7 +48,7 @@ namespace Pinetime {
 
         uint8_t qrcode[qrcodegen_BUFFER_LEN_MAX];
         uint8_t tempBuffer[qrcodegen_BUFFER_LEN_MAX];
-        std::string qrText = "https://github.com/JF002/Pinetime";
+        std::string qrText; 
       };
     }
   }
