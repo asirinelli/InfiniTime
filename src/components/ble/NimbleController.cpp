@@ -38,6 +38,7 @@ NimbleController::NimbleController(Pinetime::System::SystemTask& systemTask,
         navService{systemTask},
         batteryInformationService{batteryController},
         immediateAlertService{systemTask, notificationManager},
+        qrService(systemTask),
         serviceDiscovery({&currentTimeClient, &alertNotificationClient}),
         heartRateService{systemTask, heartRateController} {
 }
@@ -62,6 +63,7 @@ void NimbleController::Init() {
   dfuService.Init();
   batteryInformationService.Init();
   immediateAlertService.Init();
+  qrService.Init();
   heartRateService.Init();
   int res;
   res = ble_hs_util_ensure_addr(0);
@@ -243,4 +245,3 @@ void NimbleController::StartDiscovery() {
 uint16_t NimbleController::connHandle() {
     return connectionHandle;
 }
-
