@@ -212,7 +212,7 @@ void DisplayApp::RunningState() {
       case Apps::Meter: currentScreen = std::make_unique<Screens::Meter>(this);break;
       case Apps::StopWatch: currentScreen = std::make_unique<Screens::StopWatch>(this); break;
       case Apps::Twos: currentScreen = std::make_unique<Screens::Twos>(this); break;
-      case Apps::Qr: currentScreen = std::make_unique<Screens::Qr>(this, lvgl); break;
+      case Apps::Qr: currentScreen = std::make_unique<Screens::Qr>(this, lvgl, systemTask.nimble().qr()); break;
       case Apps::Paint: currentScreen = std::make_unique<Screens::InfiniPaint>(this, lvgl); break;
       case Apps::Paddle: currentScreen = std::make_unique<Screens::Paddle>(this, lvgl); break;
       case Apps::Brightness : currentScreen = std::make_unique<Screens::Brightness>(this, brightnessController); break;
