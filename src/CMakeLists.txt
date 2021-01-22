@@ -295,7 +295,7 @@ set(LVGL_SRC
         )
 
 set(QRCODE_SRC
-        libs/qrcodegenerator/QrCode.cpp
+        libs/qrcodegenerator/qrcodegen.c
         )
 
 list(APPEND IMAGE_FILES
@@ -575,7 +575,7 @@ set(INCLUDE_FILES
         libs/date/includes/date/julian.h
         libs/date/includes/date/ptz.h
         libs/date/includes/date/tz_private.h
-        libs/qrcodegenerator/QrCode.hpp
+        libs/qrcodegenerator/qrcodegen.h
         displayapp/LittleVgl.h
         systemtask/SystemTask.h
         systemtask/SystemMonitor.h
