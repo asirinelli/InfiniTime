@@ -21,6 +21,7 @@ void vibrateTimer(void * p_context)
 static void create_timers()
 {
     //create timer, single shot, re-armable
+    APP_TIMER_DEF(vibTimer);
     app_timer_create(&vibTimer, APP_TIMER_MODE_SINGLE_SHOT, vibrateTimer);
 }
 
