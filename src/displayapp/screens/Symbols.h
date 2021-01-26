@@ -26,6 +26,7 @@ namespace Pinetime {
         static constexpr const char* paintbrush = "\xEF\x87\xBC";
         static constexpr const char* paddle = "\xEF\x91\x9D";
         static constexpr const char* map = "\xEF\x96\xa0";
+        static constexpr const char* qrcode = "\xEF\x80\xa9";        
       }
     }
   }

@@ -70,7 +70,7 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
 
 std::unique_ptr<Screen> ApplicationList::CreateScreen3() {
   std::array<Screens::Tile::Applications, 6> applications {
-        {{"QR", Apps::Qr},
+        {{Symbols::qrcode, Apps::Qr},
          {Symbols::none, Apps::None},
          {Symbols::none, Apps::None},
          {Symbols::none, Apps::None},
