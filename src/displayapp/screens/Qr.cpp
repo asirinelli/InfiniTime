@@ -42,7 +42,7 @@ void Qr::drawQr() {
 
   qrText = qrService.getQrText();
 
-  bool ok = qrcodegen_encodeText(&qrText[0], tempBuffer, qrcode, qrcodegen_Ecc_LOW,
+  bool ok = qrcodegen_encodeText(qrText.c_str(), tempBuffer, qrcode, qrcodegen_Ecc_LOW,
       qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
 
   if (ok) {
@@ -51,7 +51,7 @@ void Qr::drawQr() {
     qrModuleSize = 240 / (qrSize + 2*border);
     bufferSize = qrModuleSize * qrModuleSize;
 
-    lv_color_t b[bufferSize];
+    lv_color_t* b = new lv_color_t[bufferSize];
     std::fill(b, b + bufferSize, LV_COLOR_WHITE);
 
     for (int y = -border; y < qrSize + border; y++) {
@@ -61,10 +61,10 @@ void Qr::drawQr() {
           area.y1 = qrModuleSize*(y+border);
           area.x2 = qrModuleSize*(x+border+1) - 1;
           area.y2 = qrModuleSize*(y+border+1) - 1;
-          lvgl.SetFullRefresh(Components::LittleVgl::FullRefreshDirections::None);
           lvgl.FlushDisplay(&area, b);
         }
     	}
     }
+    delete[] b;
   }
 }
