@@ -21,6 +21,11 @@ Qr::~Qr() {
 }
 
 bool Qr::Refresh() {
+  if(qrText != qrService.getQrText()) {
+    qrText = qrService.getQrText();
+    resetScreen();
+    drawQr();
+  }
   return running;
 }
 
@@ -34,14 +39,11 @@ bool Qr::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
 }
 
 bool Qr::OnTouchEvent(uint16_t x, uint16_t y) {
-  drawQr();
   return true;
 }
 
 void Qr::drawQr() {
-
-  qrText = qrService.getQrText();
-
+  
   bool ok = qrcodegen_encodeText(qrText.c_str(), tempBuffer, qrcode, qrcodegen_Ecc_LOW,
       qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
 
@@ -68,3 +70,15 @@ void Qr::drawQr() {
     delete[] b;
   }
 }
+
+void Qr::resetScreen() {
+  lv_color_t* b = new lv_color_t[LV_HOR_RES * LV_VER_RES];
+  std::fill(b, b + LV_HOR_RES * LV_VER_RES, LV_COLOR_BLACK);
+  area.x1 = 0;
+  area.y1 = 0;
+  area.x2 = LV_HOR_RES - 1;
+  area.y2 = LV_VER_RES - 1;  
+  lvgl.FlushDisplay(&area, b);
+  delete[] b;
+}
+
