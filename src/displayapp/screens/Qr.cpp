@@ -21,6 +21,11 @@ Qr::~Qr() {
 }
 
 bool Qr::Refresh() {
+  if(qrText != qrService.getQrText()) {
+    qrText = qrService.getQrText();
+    resetScreen();
+    drawQr();
+  }
   return running;
 }
 
@@ -34,17 +39,13 @@ bool Qr::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
 }
 
 bool Qr::OnTouchEvent(uint16_t x, uint16_t y) {
-  drawQr();
   return true;
 }
 
 void Qr::drawQr() {
-
-  qrText = qrService.getQrText();
-
+  
   bool ok = qrcodegen_encodeText(qrText.c_str(), tempBuffer, qrcode, qrcodegen_Ecc_LOW,
-      qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
-
+    qrcodegen_VERSION_MIN, qrcodegen_VERSION_MAX, qrcodegen_Mask_AUTO, true);
   if (ok) {
 
     qrSize = qrcodegen_getSize(qrcode);
@@ -61,6 +62,7 @@ void Qr::drawQr() {
           area.y1 = qrModuleSize*(y+border);
           area.x2 = qrModuleSize*(x+border+1) - 1;
           area.y2 = qrModuleSize*(y+border+1) - 1;
+          lvgl.SetFullRefresh(Components::LittleVgl::FullRefreshDirections::None);  
           lvgl.FlushDisplay(&area, b);
         }
     	}
@@ -68,3 +70,21 @@ void Qr::drawQr() {
     delete[] b;
   }
 }
+
+void Qr::resetScreen() {
+  
+  lv_color_t* b = new lv_color_t[100];
+  std::fill(b, b + 100, LV_COLOR_BLACK);
+  for (int y = 0; y < (LV_VER_RES_MAX/10); y++) {
+    for (int x = 0; x < (LV_HOR_RES_MAX/10); x++) {
+      area.x1 = 10*x;
+      area.y1 = 10*y;
+      area.x2 = 10*(x+1) - 1;
+      area.y2 = 10*(y+1) - 1;
+      lvgl.SetFullRefresh(Components::LittleVgl::FullRefreshDirections::None);  
+      lvgl.FlushDisplay(&area, b);
+    }
+  }
+  delete[] b;
+}
+
