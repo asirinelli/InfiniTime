@@ -43,6 +43,7 @@ namespace Pinetime {
         uint8_t qrSize;
         uint8_t qrModuleSize;
         uint8_t bufferSize;
+        uint8_t offset;
         lv_area_t area;
 
         static constexpr uint16_t border = 1;
