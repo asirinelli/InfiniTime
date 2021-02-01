@@ -3,10 +3,17 @@
 
 using namespace Pinetime::Applications::Screens;
 
-Notifications::Notifications(DisplayApp *app, Pinetime::Controllers::NotificationManager &notificationManager, Modes mode) :
-        Screen(app), notificationManager{notificationManager}, mode{mode} {
+Notifications::Notifications(DisplayApp *app, 
+  Pinetime::Controllers::NotificationManager &notificationManager, 
+  Pinetime::Controllers::MotorController& motorController, 
+  Modes mode) :
+    Screen(app), notificationManager{notificationManager}, 
+    motorController{motorController}, mode{mode} {
+
   notificationManager.ClearNewNotificationFlag();
   auto notification = notificationManager.GetLastNotification();
+  
+
   if(notification.valid) {
     currentId = notification.id;
     currentItem.reset(new NotificationItem("\nNotification", notification.message.data(), notification.index, notificationManager.NbNotifications(), mode));
@@ -22,6 +29,7 @@ Notifications::Notifications(DisplayApp *app, Pinetime::Controllers::Notificatio
     style_line.line.width = 3;
     style_line.line.rounded = 0;
 
+    motorController.SetDuration(35);
 
     timeoutLine = lv_line_create(lv_scr_act(), nullptr);
     lv_line_set_style(timeoutLine, LV_LINE_STYLE_MAIN, &style_line);
