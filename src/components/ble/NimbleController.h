@@ -16,6 +16,7 @@
 #include "DfuService.h"
 #include "ImmediateAlertService.h"
 #include "MusicService.h"
+#include "QrService.h"
 #include "NavigationService.h"
 #include "ServiceDiscovery.h"
 #include "HeartRateService.h"
@@ -57,6 +58,7 @@ namespace Pinetime {
         void StartDiscovery();
 
         Pinetime::Controllers::MusicService& music() {return musicService;};
+        Pinetime::Controllers::QrService& qr() {return qrService;};
         Pinetime::Controllers::NavigationService& navigation() {return navService;};
         Pinetime::Controllers::AlertNotificationService& alertService() {return anService;};
 
@@ -80,6 +82,7 @@ namespace Pinetime {
         NavigationService navService;
         BatteryInformationService batteryInformationService;
         ImmediateAlertService immediateAlertService;
+        QrService qrService;
         HeartRateService heartRateService;
 
         uint8_t addrType; // 1 = Random, 0 = PUBLIC

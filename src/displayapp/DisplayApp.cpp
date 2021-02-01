@@ -21,6 +21,7 @@
 #include "displayapp/screens/SystemInfo.h"
 #include "displayapp/screens/Tile.h"
 #include "displayapp/screens/Twos.h"
+#include "displayapp/screens/Qr.h"
 #include "drivers/Cst816s.h"
 #include "drivers/St7789.h"
 #include "drivers/Watchdog.h"
@@ -207,6 +208,7 @@ void DisplayApp::RunningState() {
       case Apps::SysInfo: currentScreen.reset(new Screens::SystemInfo(this, dateTimeController, batteryController, brightnessController, bleController, watchdog)); break;
       case Apps::Meter: currentScreen.reset(new Screens::Meter(this)); break;
       case Apps::Twos: currentScreen.reset(new Screens::Twos(this)); break;
+      case Apps::Qr: currentScreen.reset(new Screens::Qr(this, lvgl, systemTask.nimble().qr())); break;
       case Apps::Gauge: currentScreen.reset(new Screens::Gauge(this)); break;
       case Apps::Paint: currentScreen.reset(new Screens::InfiniPaint(this, lvgl)); break;
       case Apps::Paddle: currentScreen.reset(new Screens::Paddle(this, lvgl)); break;
@@ -284,4 +286,3 @@ void DisplayApp::SetFullRefresh(DisplayApp::FullRefreshDirections direction) {
 void DisplayApp::SetTouchMode(DisplayApp::TouchModes mode) {
   touchMode = mode;
 }
-
