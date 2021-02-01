@@ -87,7 +87,6 @@ namespace Pinetime {
         Apps nextApp = Apps::None;
         bool onClockApp = false; // TODO find a better way to know that we should handle gestures and button differently for the Clock app.
         Controllers::BrightnessController brightnessController;
-        std::unique_ptr<Screens::Modal> modal;
         Pinetime::Controllers::NotificationManager& notificationManager;
         Pinetime::Controllers::MotorController& motorController;
         Pinetime::Controllers::FirmwareValidator validator;
