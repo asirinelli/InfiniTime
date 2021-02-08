@@ -10,11 +10,10 @@ extern lv_font_t jetbrains_mono_bold_20;
 Notifications::Notifications(DisplayApp *app, 
   Pinetime::Controllers::NotificationManager &notificationManager,
   Pinetime::Controllers::AlertNotificationService& alertNotificationService, 
-  Pinetime::Controllers::MotorController& motorController, 
   Modes mode) :
     Screen(app), notificationManager{notificationManager},
-    alertNotificationService{alertNotificationService}, 
-    motorController{motorController}, mode{mode} {
+    alertNotificationService{alertNotificationService},
+    mode{mode} {
 
   notificationManager.ClearNewNotificationFlag();
   auto notification = notificationManager.GetLastNotification();
@@ -46,8 +45,6 @@ Notifications::Notifications(DisplayApp *app,
     style_line.line.color = LV_COLOR_WHITE;
     style_line.line.width = 3;
     style_line.line.rounded = 0;
-
-    motorController.SetDuration(35);
 
     timeoutLine = lv_line_create(lv_scr_act(), nullptr);
     lv_line_set_style(timeoutLine, LV_LINE_STYLE_MAIN, &style_line);
@@ -126,6 +123,10 @@ bool Notifications::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
                                              alertNotificationService));
     }
       return true;
+    case Pinetime::Applications::TouchEvents::LongTap: {
+      notificationManager.toggleVibrations();
+      return true;
+    }
     default:
       return false;
   }
