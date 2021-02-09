@@ -5,6 +5,7 @@
 #include <memory>
 #include "Screen.h"
 #include "components/ble/NotificationManager.h"
+#include "components/ble/AlertNotificationService.h"
 
 namespace Pinetime {
   namespace Controllers {

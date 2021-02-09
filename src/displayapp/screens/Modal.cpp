@@ -39,7 +39,7 @@ void Modal::OnEvent(lv_obj_t *event_obj, lv_event_t evt) {
     Hide();
   } else if(evt == LV_EVENT_VALUE_CHANGED) {
     if(event_obj == mbox) {
-      if(strcmp(lv_mbox_get_active_btn_text(event_obj), this->positiveButton.c_str()) == 0) {
+      if(strcmp(lv_msgbox_get_active_btn_text(event_obj), this->positiveButton.c_str()) == 0) {
         if(alertNotificationService != nullptr) {
           alertNotificationService->event(Pinetime::Controllers::AlertNotificationService::EVENT_ANSWER_CALL);
         }
