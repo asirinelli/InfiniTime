@@ -186,21 +186,60 @@ alertNotificationService)
   lv_label_set_text(alert_type, title);
   lv_obj_align(alert_type, NULL, LV_ALIGN_IN_TOP_LEFT, 0, -4); 
 
-  lv_obj_t* alert_subject = lv_label_create(container1, nullptr);
-  lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
-  lv_label_set_long_mode(alert_subject, LV_LABEL_LONG_BREAK);
-  lv_obj_set_width(alert_subject, LV_HOR_RES - 20);    
-  lv_label_set_text(alert_subject, msg);
-  //lv_obj_align(alert_subject, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 50);
-
   lv_obj_t* backgroundLabel = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_long_mode(backgroundLabel, LV_LABEL_LONG_CROP);
   lv_obj_set_size(backgroundLabel, 240, 240);
   lv_obj_set_pos(backgroundLabel, 0, 0);
   lv_label_set_text(backgroundLabel, "");
   
-  
-  
+  switch(category) {
+    default: {
+      lv_obj_t* alert_subject = lv_label_create(container1, nullptr);
+      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
+      lv_label_set_long_mode(alert_subject, LV_LABEL_LONG_BREAK);
+      lv_obj_set_width(alert_subject, LV_HOR_RES - 20);    
+      lv_label_set_text(alert_subject, msg);
+      //lv_obj_align(alert_subject, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 50);
+    }
+    break;
+    case Controllers::NotificationManager::Categories::IncomingCall: {
+      lv_obj_t* alert_subject = lv_label_create(container1, nullptr);
+      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
+      lv_label_set_long_mode(alert_subject, LV_LABEL_LONG_BREAK);
+      lv_obj_set_width(alert_subject, LV_HOR_RES - 20);    
+      lv_label_set_text(alert_subject, "Incoming call from ");
+
+      lv_obj_t* l2 = lv_label_create(container1, nullptr);
+      lv_obj_set_style_local_text_color(alert_subject, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_ORANGE);
+      lv_label_set_long_mode(l2, LV_LABEL_LONG_BREAK);
+      lv_obj_set_width(l2, LV_HOR_RES - 20);
+      lv_label_set_text(l2, msg);
+
+      bt_accept = lv_btn_create(lv_scr_act(), nullptr);
+      bt_accept->user_data = this;
+      lv_obj_set_event_cb(bt_accept, AcceptIncomingCallEventHandler);
+      lv_obj_set_size(bt_accept, LV_HOR_RES / 3, 80);
+      lv_obj_align(bt_accept, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
+      label_accept = lv_label_create(bt_accept, nullptr);
+      lv_label_set_text(label_accept, Symbols::phone);
+      
+      bt_mute = lv_btn_create(lv_scr_act(), nullptr);
+      bt_mute->user_data = this;
+      lv_obj_set_event_cb(bt_mute, MuteIncomingCallEventHandler);
+      lv_obj_set_size(bt_mute, LV_HOR_RES / 3, 80);
+      lv_obj_align(bt_mute, nullptr, LV_ALIGN_IN_BOTTOM_MID, 0, 0);
+      label_mute = lv_label_create(bt_mute, nullptr);
+      lv_label_set_text(label_mute, Symbols::volumMute);
+
+      bt_reject = lv_btn_create(lv_scr_act(), nullptr);
+      bt_reject->user_data = this;
+      lv_obj_set_event_cb(bt_reject, RejectIncomingCallEventHandler);
+      lv_obj_set_size(bt_reject, LV_HOR_RES / 3, 80);
+      lv_obj_align(bt_reject, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
+      label_reject = lv_label_create(bt_reject, nullptr);
+      lv_label_set_text(label_reject, Symbols::phoneSlash);
+    }
+  }
 }
 
 void Notifications::NotificationItem::OnAcceptIncomingCall(lv_event_t event) {
