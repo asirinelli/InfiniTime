@@ -18,7 +18,7 @@ namespace Pinetime {
         private:
           bool running = true;
 
-          ScreenList<3> screens;
+          ScreenList<2> screens;
           std::unique_ptr<Screen> CreateScreen1();
           std::unique_ptr<Screen> CreateScreen2();
           std::unique_ptr<Screen> CreateScreen3();
