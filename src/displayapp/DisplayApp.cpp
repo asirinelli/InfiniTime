@@ -20,6 +20,7 @@
 #include "displayapp/screens/Tile.h"
 #include "displayapp/screens/Twos.h"
 #include "displayapp/screens/Qr.h"
+#include "displayapp/screens/calendar.h"
 #include "drivers/Cst816s.h"
 #include "drivers/St7789.h"
 #include "drivers/Watchdog.h"
@@ -206,6 +207,7 @@ void DisplayApp::RunningState() {
       case Apps::Qr: currentScreen.reset(new Screens::Qr(this, lvgl, systemTask.nimble().qr())); break;
       case Apps::Paint: currentScreen.reset(new Screens::InfiniPaint(this, lvgl)); break;
       case Apps::Paddle: currentScreen.reset(new Screens::Paddle(this, lvgl)); break;
+      case Apps::calendar: currentScreen.reset(new Screens::calendar(this, lvgl)); break;
       case Apps::Brightness : currentScreen.reset(new Screens::Brightness(this, brightnessController)); break;
       case Apps::Music : currentScreen.reset(new Screens::Music(this, systemTask.nimble().music())); break;
       case Apps::Navigation : currentScreen.reset(new Screens::Navigation(this, systemTask.nimble().navigation())); break;
