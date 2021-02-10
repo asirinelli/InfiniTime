@@ -8,7 +8,6 @@ static void event_handler(lv_obj_t * obj, lv_event_t event)
 {
     if(event == LV_EVENT_VALUE_CHANGED) {
         lv_calendar_date_t * date = lv_calendar_get_pressed_date(obj);
-        }
     }
 }
 
