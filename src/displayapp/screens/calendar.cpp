@@ -6,31 +6,19 @@ using namespace Pinetime::Applications::Screens;
 
 static void event_handler(lv_obj_t* obj, lv_event_t event)
 {
-  calendar* screen = static_cast<calendar *>(obj->user_data);
-  screen->OnObjectEvent(obj, event);
 }
 
 calendar::calendar(Pinetime::Applications::DisplayApp* app, Pinetime::Components::LittleVgl& lvgl) : Screen(app), lvgl{lvgl} {
   app->SetTouchMode(DisplayApp::TouchModes::Polling);
 
-  
-
-  lv_obj_t* calendar = lv_calendar_create(lv_scr_act(), NULL);
+  lv_obj_t  * calendar = lv_calendar_create(lv_scr_act(), NULL);
   lv_obj_set_size(calendar, 235, 235);
   lv_obj_align(calendar, NULL, LV_ALIGN_CENTER, 0, 0);
-
-  static lv_style_t style;
-  lv_style_copy(&style,lv_calendar_get_style(calendar,LV_CALENDAR_STYLE_DAY_NAMES));
-  style.text.font = &jetbrains_mono_bold_20;
-  lv_calendar_set_style(calendar, LV_CALENDAR_STYLE_DAY_NAMES, &style);
-  lv_calendar_set_style(calendar, LV_CALENDAR_STYLE_HEADER, &style);
-  lv_calendar_set_style(calendar, LV_CALENDAR_STYLE_HEADER_PR, &style);
-  lv_calendar_set_style(calendar, LV_CALENDAR_STYLE_BG, &style);
-
   lv_obj_set_event_cb(calendar, event_handler);
 
   /*Make the date number smaller to be sure they fit into their area*/
   lv_obj_set_style_local_text_font(calendar, LV_CALENDAR_PART_DATE, LV_STATE_DEFAULT, lv_theme_get_font_small());
+
 
   /*Set today's date*/
   lv_calendar_date_t today;
