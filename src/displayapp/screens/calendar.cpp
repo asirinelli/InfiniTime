@@ -17,7 +17,7 @@ calendar::calendar(Pinetime::Applications::DisplayApp* app, Pinetime::Components
   lv_obj_set_event_cb(calendar, event_handler);
 
   /*Make the date number smaller to be sure they fit into their area*/
-  lv_obj_set_style_local_text_font(calendar, LV_CALENDAR_PART_DATE, LV_STATE_DEFAULT, lv_theme_get_font_small());
+  /*lv_obj_set_style_local_text_font(calendar, LV_CALENDAR_PART_DATE, LV_STATE_DEFAULT, lv_theme_get_font_small());*/
 
 
   /*Set today's date*/
