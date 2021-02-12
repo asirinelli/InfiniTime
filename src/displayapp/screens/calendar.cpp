@@ -32,23 +32,6 @@ calendar::calendar(Pinetime::Applications::DisplayApp* app, Pinetime::Components
 
   lv_calendar_set_today_date(cal, &today);
   lv_calendar_set_showed_date(cal, &today);
-  
-  
-  /*Highlight a few days*/
-  static lv_calendar_date_t highlighted_days[3];       /*Only its pointer will be saved so should be static*/
-  highlighted_days[0].year = 2021;
-  highlighted_days[0].month = 2;
-  highlighted_days[0].day = 3;
-
-  highlighted_days[1].year = 2021;
-  highlighted_days[1].month = 2;
-  highlighted_days[1].day = 19;
-
-  highlighted_days[2].year = 2021;
-  highlighted_days[2].month = 7;
-  highlighted_days[2].day = 22;
-
-  lv_calendar_set_highlighted_dates(cal, highlighted_days, 3);
 }
 
 calendar::~calendar() {
