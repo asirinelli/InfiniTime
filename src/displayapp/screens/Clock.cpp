@@ -8,6 +8,7 @@
 #include "NotificationIcon.h"
 #include "Symbols.h"
 #include "components/battery/BatteryController.h"
+#include "components/motion/MotionController.h"
 #include "components/ble/BleController.h"
 #include "components/ble/NotificationManager.h"
 #include "../DisplayApp.h"
@@ -23,11 +24,13 @@ Clock::Clock(DisplayApp* app,
         Controllers::Ble& bleController,
         Controllers::NotificationManager& notificatioManager,
         Controllers::Settings &settingsController,
-        Controllers::HeartRateController& heartRateController) : Screen(app),
+        Controllers::HeartRateController& heartRateController,
+        Controllers::MotionController& motionController) : Screen(app),
         dateTimeController{dateTimeController}, batteryController{batteryController},
         bleController{bleController}, notificatioManager{notificatioManager},
         settingsController{settingsController},
         heartRateController{heartRateController},
+        motionController{motionController},
         screens{app, 
           settingsController.GetClockFace(),
           {
@@ -64,7 +67,7 @@ bool Clock::OnTouchEvent(Pinetime::Applications::TouchEvents event) {
 }
 
 std::unique_ptr<Screen> Clock::WatchFaceDigitalScreen() {  
-  return std::make_unique<Screens::WatchFaceDigital>(app, dateTimeController, batteryController, bleController, notificatioManager, settingsController, heartRateController);
+  return std::make_unique<Screens::WatchFaceDigital>(app, dateTimeController, batteryController, bleController, notificatioManager, settingsController, heartRateController, motionController);
 }
 
 std::unique_ptr<Screen> Clock::WatchFaceAnalogScreen() {  
