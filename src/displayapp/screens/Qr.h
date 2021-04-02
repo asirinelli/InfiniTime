@@ -7,6 +7,7 @@
 #include "components/ble/QrService.h"
 #include "qrcodegen.h"
 
+#define MAXLISTITEMS 4
 
 namespace Pinetime {
   namespace Components {
@@ -30,11 +31,20 @@ namespace Pinetime {
 
         bool OnTouchEvent(uint16_t x, uint16_t y) override;
 
-        void drawQr();
+        void drawQrList();
+        void drawQr(std::string qrText);
         
         void resetScreen();
 
+        void OnButtonEvent(lv_obj_t * object, lv_event_t event);
+        
+        bool showingQrCode = false;
+        
       private:
+
+        std::array<Pinetime::Controllers::QrService::QrInfo, 4> qrList;
+        lv_obj_t * itemApps[MAXLISTITEMS];
+        
         Pinetime::Components::LittleVgl& lvgl;
         Pinetime::Controllers::QrService& qrService;
 
@@ -48,10 +58,8 @@ namespace Pinetime {
 
         static constexpr uint16_t border = 1;
 
-
         uint8_t qrcode[qrcodegen_BUFFER_LEN_MAX];
         uint8_t tempBuffer[qrcodegen_BUFFER_LEN_MAX];
-        std::string qrText = "";
       };
     }
   }
