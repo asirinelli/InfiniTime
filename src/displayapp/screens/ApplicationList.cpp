@@ -21,7 +21,7 @@ ApplicationList::ApplicationList(Pinetime::Applications::DisplayApp *app,
           {
                 [this]() -> std::unique_ptr<Screen> { return CreateScreen1(); },
                 [this]() -> std::unique_ptr<Screen> { return CreateScreen2(); },
-                //[this]() -> std::unique_ptr<Screen> { return CreateScreen3(); }
+                // [this]() -> std::unique_ptr<Screen> { return CreateScreen3(); }
           },
           Screens::ScreenListModes::UpDown
         } {}
@@ -62,7 +62,7 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
             {Symbols::paintbrush,   Apps::Paint},
             {Symbols::paddle,       Apps::Paddle},
             {"2",                   Apps::Twos},
-            {"",                    Apps::None},
+            {Symbols::qrcode,           Apps::Qr},
             {"",                    Apps::None},
             {"",                    Apps::None},
           }
@@ -73,13 +73,13 @@ std::unique_ptr<Screen> ApplicationList::CreateScreen2() {
 
 /*std::unique_ptr<Screen> ApplicationList::CreateScreen3() {
   std::array<Screens::Tile::Applications, 6> applications {
-          {{"A", Apps::Meter},
-           {"B", Apps::Navigation},
-           {"C", Apps::Clock},
-           {"D", Apps::Music},
-           {"E", Apps::SysInfo},
-           {"F", Apps::Brightness}
-          }
+        {{"QR", Apps::Qr},
+         {Symbols::none, Apps::None},
+         {Symbols::none, Apps::None},
+         {Symbols::none, Apps::None},
+         {Symbols::none, Apps::None},
+         {Symbols::none, Apps::None}
+    }
   };
 
   return std::make_unique<Screens::Tile>(2, 3, app, settingsController, batteryController, dateTimeController, applications);
