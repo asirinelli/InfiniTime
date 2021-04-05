@@ -1,10 +1,12 @@
 #include "DisplayApp.h"
 #include <libraries/log/nrf_log.h>
 #include <displayapp/screens/HeartRate.h>
+#include <displayapp/screens/Motion.h>
 #include "components/battery/BatteryController.h"
 #include "components/ble/BleController.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/ble/NotificationManager.h"
+#include "components/motion/MotionController.h"
 #include "displayapp/screens/ApplicationList.h"
 #include "displayapp/screens/Brightness.h"
 #include "displayapp/screens/Clock.h"
@@ -43,7 +45,8 @@ DisplayApp::DisplayApp(Drivers::St7789 &lcd, Components::LittleVgl &lvgl, Driver
                        System::SystemTask &systemTask,
                        Pinetime::Controllers::NotificationManager& notificationManager,
                        Pinetime::Controllers::HeartRateController& heartRateController,
-                       Controllers::Settings &settingsController) :
+                       Controllers::Settings &settingsController,
+                       Pinetime::Controllers::MotionController& motionController) :
         lcd{lcd},
         lvgl{lvgl},
         touchPanel{touchPanel},
@@ -54,7 +57,8 @@ DisplayApp::DisplayApp(Drivers::St7789 &lcd, Components::LittleVgl &lvgl, Driver
         systemTask{systemTask},
         notificationManager{notificationManager},
         heartRateController{heartRateController},
-        settingsController{settingsController} {
+        settingsController{settingsController},
+        motionController{motionController} {
   msgQueue = xQueueCreate(queueSize, itemSize);
   // Start clock when smartwatch boots
   LoadApp( Apps::Clock, DisplayApp::FullRefreshDirections::None );
@@ -174,7 +178,7 @@ void DisplayApp::Refresh() {
         break;
        case Messages::UpdateDateTime:
        // Added to remove warning
-       // What should happen here? 
+       // What should happen here?
        break;
     }
   }
@@ -220,7 +224,7 @@ void DisplayApp::LoadApp(Apps app, DisplayApp::FullRefreshDirections direction) 
       break;
     case Apps::None:
     case Apps::Clock:
-      currentScreen = std::make_unique<Screens::Clock>(this, dateTimeController, batteryController, bleController, notificationManager, settingsController, heartRateController); 
+      currentScreen = std::make_unique<Screens::Clock>(this, dateTimeController, batteryController, bleController, notificationManager, settingsController, heartRateController, motionController); 
       break;
 
     case Apps::FirmwareValidation:
@@ -299,6 +303,9 @@ void DisplayApp::LoadApp(Apps app, DisplayApp::FullRefreshDirections direction) 
       break;
     case Apps::HeartRate:
       currentScreen = std::make_unique<Screens::HeartRate>(this, heartRateController, systemTask); 
+      break;
+    case Apps::Motion:
+      currentScreen = std::make_unique<Screens::Motion>(this, motionController); 
       break;
   }
   currentApp = app;

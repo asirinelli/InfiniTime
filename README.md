@@ -1,7 +1,7 @@
 
 # PineTime
 
-![Build PineTime Firmware](https://github.com/JF002/InfiniTime/workflows/Build%20PineTime%20Firmware/badge.svg?branch=master)
+[![Build PineTime Firmware](https://github.com/JF002/InfiniTime/workflows/Build%20PineTime%20Firmware/badge.svg?branch=master)](https://github.com/JF002/InfiniTime/actions)
 
 > The PineTime is a free and open source smartwatch capable of running custom-built open operating systems. Some of the notable features include a heart rate monitor, a week-long battery as well as a capacitive touch IPS display that is legible in direct sunlight. It is a fully community driven side-project, which means that it will ultimately be up to the developers and end-users to determine when they deem the PineTime ready to ship.
 
@@ -34,6 +34,9 @@ As of now, here is the list of achievements of this project:
  - Rich user interface via display, touchscreen and pushbutton
  - Time synchronization via BLE
  - Notification via BLE
+ - Heart rate measurements
+ - Step counting
+ - Wake-up on wrist rotation
  - Multiple 'apps' : 
     * Clock (displays the date, time, battery level, ble connection status, heart rate)
     * System info (displays various info : BLE MAC, build date/time, uptime, version,...)

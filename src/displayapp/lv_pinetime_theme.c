@@ -55,6 +55,7 @@ static lv_style_t style_bg_grad;
 static lv_style_t style_lmeter;
 static lv_style_t style_cb_bg;
 static lv_style_t style_cb_bullet;
+static lv_style_t style_chart_serie;
 
 static bool inited;
 
@@ -295,6 +296,11 @@ static void basic_init(void)
     lv_style_set_pad_top(&style_cb_bullet, LV_STATE_DEFAULT, LV_DPX(8));
     lv_style_set_pad_bottom(&style_cb_bullet, LV_STATE_DEFAULT, LV_DPX(8));
 
+    style_init_reset(&style_chart_serie);
+    lv_style_set_line_color(&style_chart_serie, LV_STATE_DEFAULT, LV_PINETIME_WHITE);
+    lv_style_set_line_width(&style_chart_serie, LV_STATE_DEFAULT, 4);
+    lv_style_set_size(&style_chart_serie, LV_STATE_DEFAULT, 4);
+    lv_style_set_bg_opa(&style_chart_serie, LV_STATE_DEFAULT, 0);
 }
 
 
@@ -510,6 +516,12 @@ static void theme_apply(lv_obj_t * obj, lv_theme_style_t name)
             _lv_style_list_add_style(list, &style_cb_bullet);
             break;
 
+
+        case LV_THEME_CHART:
+          lv_obj_clean_style_list(obj, LV_CHART_PART_SERIES);
+          list = lv_obj_get_style_list(obj, LV_CHART_PART_SERIES);
+          _lv_style_list_add_style(list, &style_btn);
+          _lv_style_list_add_style(list, &style_chart_serie);
 
         default:
             break;
